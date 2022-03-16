@@ -49,7 +49,7 @@ const { Console } = require('console');
 const { json } = require('body-parser');
 
 // Appling the Routes
-app.use('https://website-psi-wine-36.vercel.app/',index.router);
+app.use('/',index.router);
 app.use('/user',user);
 app.use('/brand',brand);
 app.use('/addtocart',addtocart)
