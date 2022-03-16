@@ -1,0 +1,282 @@
+<%- include("./partial/header") %>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class='fas fa-angle-double-up'></i></button>
+    <div class="best-features about-features page-heading header-text">
+        <div class="container">
+            <div class="row product-cart-section">
+                <div class="col-md-6">
+                    <div class="right-image">
+                        <img id="pro-img" class="product_img-responsive" src="<%= result.productDetails[0].product_img %>" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <h1 id="pro-name"><%= product_name%></h1>
+                    </div>
+                    <div style="display: flex; justify-content:flex-start;">
+                        <h4 class="col-md-3 text-muted">Price</h4><h4 id="product-price" style="margin-left: -30px;"><%= result.productVariant[0].product_price %></h4>
+                    </div>
+                    <h4 class="col-md-12 text-muted">Varianst</h4>
+                    <div class="row">
+                        <div class="test1" style="margin-left: -10px;"></div>
+                        <% for(i=0;i< result.productVariant.length;i++){ %>
+                            <div class="col-md-4" style="margin:10px; margin-left:0px">
+                                <button type="button" class="btn btn-default variant"
+                                data-id="<%= result.productVariant[i].product_pkg_id %>"
+                                data-price="<%= result.productVariant[i].product_price %>"
+                                data-weight="<%= result.productVariant[i].product_weight_gram %>"
+                                data-size="<%= result.productVariant[i].product_size %>"><%= result.productVariant[i].product_size %></button>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="test" style="margin-top: 10px; padding:20px; padding-bottom:0px">
+                    <h4 class="col-md-12 text-muted">Qty</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                  <span class="fas fa-minus"></span>
+                                </button>
+                                </span>
+                                <input type="text" id="pro-qty" name="quant[1]" class="form-control input-number" value="1" min="1" max="1000" style="width: 25px;">
+                                <span class="input-group-btn">
+                              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                  <span class="fas fa-plus"></span>
+                                </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-muted">
+                            <span id="qty-info">
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-block btn-success" style="margin-top: 10px;" 
+                        data-name="<%= product_name%>"
+                        data-price="<%= result.productVariant[0].product_price %>"
+                        data-weight="<%= result.productVariant[0].product_weight_gram %>"
+                        data-size="<%= result.productVariant[0].product_size %>"
+                        value="<%= result.productVariant[0].product_pkg_id %>"
+                        id="add-to-cart-btn"
+                        type="button">Add to cart</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row product-description-section">
+                <div class="col-md-6">
+                    <div>
+                        <h4>Description</h4>
+                        <p style="text-align: justify;"><%= result.productDetails[0].product_description %></p>
+                        <!-- <ul class="social-icons">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+
+                        </ul> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                          <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                              <button class="btn btn-block" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Indication
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <% var indication = result.productDetails[0].product_indication.split("$$") %>
+                                <ul>
+                                    <% for(i=0; i < indication.length; i++){ %>
+                                        <li><%= indication[i] %></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                              <button class="btn btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Ingredient
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <% var ingredient = result.productDetails[0].product_ingredient.split("$$") %>
+                                <ul>
+                                    <% for(i=0; i < ingredient.length; i++){ %>
+                                        <li><%= ingredient[i] %></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                              <button class="btn btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Dosage
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <% var dosage = result.productDetails[0].product_dosage.split("$$") %>
+                                <ul>
+                                    <% for(i=0; i < dosage.length; i++){ %>
+                                        <li><%= dosage[i] %></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+
+
+    <div class="team-members" style="margin-top:-110px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Related Products</h2>
+                    </div>
+                </div>
+                <% for(i=0; i< result.allProductOfCompany.length;i++){ %>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <div class="thumb-container">
+                            <img class="img-responsive" src="<%= result.allProductOfCompany[i].product_img %>" alt="">
+                            <div class="hover-effect">
+                                <div class="hover-content">
+                                    <a class="btn btn-light p-2 m-1 col-6" href="/brand/<%= companyName %>/<%= result.allProductOfCompany[i].product_name %>" role="button">View Details</a>
+                                    <button class="btn  p-2 m-1 col-6 btn-success add-to-cart"
+                                        id="<%= result.allProductOfCompany[i].product_pkg_id %>" 
+                                        data-name="<%= result.allProductOfCompany[i].product_name %>"
+                                        data-price="<%= result.allProductOfCompany[i].product_price %>"
+                                        data-weight="<%= result.allProductOfCompany[i].product_weight_gram %>"
+                                        data-size="<%= result.allProductOfCompany[i].product_size %>"
+                                        data-img="<%= result.allProductOfCompany[i].product_img %>" 
+                                        value="<%= result.allProductOfCompany[i].product_pkg_id %>" type="button">Add to cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="down-content">
+                            <a href="/brand/<%= companyName %>/<%= result.allProductOfCompany[i].product_name %>"><h4><%= result.allProductOfCompany[i].product_name %></h4></a>
+                            <span><%= companyName %></span>
+                            <h5><i class="fas fa-rupee-sign"></i> <%= result.allProductOfCompany[i].product_price %></h5>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <div class="icon">
+                            <i class="fa fa-gear"></i>
+                        </div>
+                        <div class="down-content">
+                            <h4>Product Management</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at
+                                quia quaerat.</p>
+                            <a href="#" class="filled-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <div class="icon">
+                            <i class="fa fa-gear"></i>
+                        </div>
+                        <div class="down-content">
+                            <h4>Customer Relations</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at
+                                quia quaerat.</p>
+                            <a href="#" class="filled-button">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <div class="icon">
+                            <i class="fa fa-gear"></i>
+                        </div>
+                        <div class="down-content">
+                            <h4>Global Collection</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at
+                                quia quaerat.</p>
+                            <a href="#" class="filled-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="happy-clients">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Happy Partners</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="owl-clients owl-carousel">
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="1">
+                        </div>
+
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="2">
+                        </div>
+
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="3">
+                        </div>
+
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="4">
+                        </div>
+
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="5">
+                        </div>
+
+                        <div class="client-item">
+                            <img src="/images/client-01.png" alt="6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('./partial/footer') %>
+    <script src="/js/header.js"></script>
+    <script src="/js/qty-input.js"></script>
+    <script src="/js/onload-product.js"></script>
+

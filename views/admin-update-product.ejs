@@ -1,0 +1,108 @@
+<%- include("./partial/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 110px;">
+            <a href="/user/me-dashboard" class="stretched-link float-left btn btn-primary">Dashboard</a>
+            <a href="/user/add-product-variant" class="stretched-link float-right btn btn-primary">Add Product Variant</a>
+            <div class="pt-2">
+                <h1 class="text-center">
+                    Add a New Product
+                </h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="mt-5">
+                                    <%= typeof msg != 'undefined' ? msg : ''  %>
+                                    <!-- <form action="/user/add-product" method="POST" enctype="multipart/form-data"> -->
+                                        <input type="hidden" name='id' value="<%= id %>">
+                                        <input type="hidden" name='hiddenName' value="<%= data[0].product_name %>">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" name='PName' value="<%= data[0].product_name %>" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Description</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PDescription" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required><%= data[0].product_description %></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Indication <br> (Seperated By $$)</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PIndication" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required><%= data[0].product_indication %></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Ingredient</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PIngredient" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required><%= data[0].product_ingredient %></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Dosage</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PDosage"  aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required><%= data[0].product_dosage %></textarea>
+                                        </div>
+                                        <div class="form-group pt-1">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block update-product" type="submit">Add Company</button>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block float-right" type="submit">Delete Company</button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.update-product').on('click',function(){
+            let id = $('input[name=id]').val();
+            let hiddenName = $('input[name=hiddenName]').val();
+            let PName = $('input[name=PName]').val();
+            let PDescription = $('textarea[name=PDescription]').val();
+            let PIndication = $('textarea[name=PIndication]').val();
+            let PIngredient = $('textarea[name=PIngredient]').val(); 
+            let PDosage = $('textarea[name=PDosage]').val();
+            console.log(id,hiddenName,PName,PDescription,PIndication,PIngredient,PDosage)
+            if (PName == '' || PDescription == '' || PIndication == '' || PIngredient == '' || PDosage == ''){
+                alert("All field are required");
+            }
+            else{
+                $.ajax({
+                    method:'POST',
+                    data:{id,hiddenName,PName,PDescription,PIndication,PIngredient,PDosage},
+                    url:'/user/update-product',
+                    success:function(data){
+                        if(typeof data.redirect == 'string'){
+                            window.location = data.redirect
+                        }
+                        else{
+                            alert(data)
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

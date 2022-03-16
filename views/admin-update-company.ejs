@@ -1,0 +1,90 @@
+<%- include("./partial/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 110px;">
+            <div class="pt-2">
+                <h1 class="text-center">
+                    Add a New Company
+                </h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="mt-5">
+                                    <%= typeof msg != 'undefined' ? msg : ''  %>
+                                    <!-- <form action="/user/update-company" method="POST"> -->
+                                        <input type="hidden" name='id' value="<%= id %>">
+                                        <input type="hidden" name='hiddenName' value="<%= data[0].companyName %>">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Company Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" name='companyName' value="<%= data[0].companyName %>" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="companyDesc" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default"><%= data[0].companyDescription %></textarea>
+                                        </div>
+                                        <!-- <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <label class="input-group-text" for="exampleFormControlFile1">Company Image</label>
+                                            </div>
+                                            <input  name="ImageFile" type="file" class="form-control" value="<%= data[0].companyImage %>" id="exampleFormControlFile1">
+                                        </div> -->
+                                        <div class="form-group pt-1">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary btn-block update-company" type="submit">Submit</button>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block float-right" type="submit">Delete Company</button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.update-company').on('click',function(){
+            let companyName = $('input[name=companyName]').val();
+            let hiddenName = $('input[name=hiddenName]').val();
+            let id = $('input[name=id]').val();
+            let companyDesc = $('textarea[name=companyDesc]').val();
+            if (companyName == '' || companyDesc == ''){
+                alert("All field are required");
+            }
+            else{
+                $.ajax({
+                    method:'POST',
+                    data:{companyName,companyDesc,id,hiddenName},
+                    url:'/user/update-company',
+                    success:function(data){
+                        if(typeof data.redirect == 'string'){
+                            window.location = data.redirect
+                        }
+                        else{
+                            alert(data)
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

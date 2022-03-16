@@ -1,0 +1,98 @@
+<%- include("./partial/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 110px;">
+            <a href="/user/me-dashboard" class="stretched-link float-left btn btn-primary">Dashboard</a>
+            <a href="/user/add-product" class="stretched-link float-right btn btn-primary">Go To Add new Product</a>
+            <div class="pt-2">
+                <h1 class="text-center">
+                    Update for <%= name %>
+                </h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="mt-5">
+                                    <%= typeof msg != 'undefined' ? msg : ''  %>
+                                    <!-- <form action="/user/add-product-variant" method="POST"> -->
+                                        <input type="hidden" name="id" value="<%= id %>">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Size</span>
+                                            </div>
+                                            <input type="text" class="form-control" name='PSize' value="<%= data[0].product_size %>" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Weight (g)</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="PWeight" value="<%= data[0].product_weight_gram %>" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Price</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="PPrice" value="<%= data[0].product_price %>" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Uniquie ID</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="PUQID" value="<%= data[0].product_unquie_id %>" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="form-group pt-1">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block update-product-variant" type="submit">Add Company</button>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block float-right" type="submit">Delete Company</button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>  
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.update-product-variant').on('click',function(){
+            let id = $('input[name=id]').val();
+            let PSize = $('input[name=PSize]').val();
+            let PWeight = $('input[name=PWeight]').val();
+            let PPrice = $('input[name=PPrice]').val();
+            let Pu = $('input[name=PUQID]').val();
+            if (PSize == '' || PWeight == '' || PPrice == '' || Pu == ''){
+                alert("All field are required");
+            }
+            else{
+                $.ajax({
+                    method:'POST',
+                    data:{PSize,PWeight,id,PPrice,Pu},
+                    url:'/user/update-product-variant',
+                    success:function(data){
+                        if(typeof data.redirect == 'string'){
+                            window.location = data.redirect
+                        }
+                        else{
+                            alert(data)
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

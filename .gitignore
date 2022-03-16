@@ -1,0 +1,11 @@
+.env
+node_modules
+<<<<<<< HEAD
+.sql
+.xlsx
+.docx
+=======
+.docx
+.sql
+.xlsx
+>>>>>>> 1dcc3bc6c811c9386c9bd19a51aecb6612ea7822

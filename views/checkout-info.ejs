@@ -1,0 +1,113 @@
+<%- include("./partial/header") %>
+    <!--Scroll Up Button -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class='fas fa-angle-double-up'></i></button>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 90px;">
+                <h4 class="pb-3 pt-3">Dropping Location</h4>
+                <form action="/addtocart/checkout" method="POST" id="shipping-form" class="border p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check pb-3">
+                                <input class="form-check-input radio1" id='info-type' type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                  New Shipping Address
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pb-3">
+                            <div class="form-check">
+                                <input class="form-check-input radio1" type="radio" id='info-type' name="exampleRadios" id="exampleRadios2" value="option2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                  Same as registered Address
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address2" id='register-label'></label>
+                        <p id="register-address"></p>
+                        <p id="register-city-state-zip"></p>
+                        <p id="register-country"></p>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group mt-2 col-md-6">
+                            <label for="firstname">First name</label>
+                            <input type="text" class="form-control dis" id="firstname" name="firstname" placeholder="first name" value="<%= typeof firstname != 'undefined' ? firstname : '' %>" required>
+                        </div>
+                        <div class="form-group mt-2 col-md-6">
+                            <label for="lastname">Last name</label>
+                            <input type="text" class="form-control dis" id="lastname" name="lastname" placeholder="Last name" value="<%= typeof lastname != 'undefined' ? lastname : '' %>" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control dis" id="email" name="email" placeholder="abc@gmail.com" value="<%= typeof email != 'undefined' ? email : '' %>" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="mobilenumber">Mobile Number</label>
+                            <input type="tel" class="form-control dis" id="mobilenumber" name="mobilenumber" pattern="[0-9]{4}[0-9]{3}[0-9]{3}"
+                                placeholder="Mobile Number" value="<%= typeof mobilenumber != 'undefined' ? mobilenumber : '' %>" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address1">Address</label>
+                        <input type="text" class="form-control dis" id="address1" name="address1" placeholder="1234 Main St" value="<%= typeof address1 != 'undefined' ? address1 : '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address2">Address 2</label>
+                        <input type="text" class="form-control dis" id="address2" name="address2" placeholder="Apartment, studio, or floor" value="<%= typeof address2 != 'undefined' ? address2 : '' %>" required>
+                    </div>
+                    <div class="form-row"> 
+                        <div class="form-group col-md-4">
+                            <label for="country">Country</label>
+                            <select id="country" name="country" class="form-control dis" required>
+                                <option value="">Select</option>
+                                <% for(i=0;i< country.length;i++){ %>
+                                <option value="<%= country[i].name %>"><%= country[i].name %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control dis" id="state" name="state" value="<%= typeof state != 'undefined' ? state : '' %>" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control dis" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>" required>
+                        </div>
+                        <!-- <div class="form-group col-md-3">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>">
+                        </div> -->
+                        <div class="form-group col-md-2">
+                            <label for="zipcode">Zip</label>
+                            <input type="text" class="form-control dis" id="zipcode" name="zipcode" value="<%= typeof zipcode != 'undefined' ? zipcode : '' %>" required>
+                        </div>  
+                    </div>
+                    
+                    <!--- id="button-center"---->
+                    <div class="float-left mt-4 pb-4">
+                        <a class="btn btn-primary mt-3" href="/addtocart/cart" role="button">Back to cart</a>
+                    </div>
+                    <div class="float-right mt-4 pb-4">
+                        <button type="submit" class="btn submited btn-md btn-block btn-success mt-3">Continue to Shipping</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- Additional Scripts -->
+<!-- -------------- -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script src="/js/checkout-radio.js"></script>

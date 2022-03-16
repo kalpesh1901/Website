@@ -1,0 +1,170 @@
+<%- include("./partial/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 110px;">
+            <a role='button' href="/user/me-dashboard" class="stretched-link float-left btn btn-primary">  Dashboard</a>
+            <a role='button' href="/user/add-product-variant" class="stretched-link float-right btn btn-primary">Add Product Variant</a>
+            <div class="pt-2">
+                <h1 class="text-center">
+                    Add a New Product
+                </h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="mt-5">
+                                    <%= typeof msg != 'undefined' ? msg : ''  %>
+                                    <form action="/user/add-product" method="POST" enctype="multipart/form-data">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Company Name</span>
+                                            </div>
+                                            <select id="company" name="PCompany" class="form-control" required>
+                                                <option value="0">Select the company</option>
+                                                <% for(i=0;i< companys.length;i++){ %>
+                                                <option value="<%= companys[i].id %> <%= companys[i].companyName %>"><%= companys[i].companyName %></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" name='PName' aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Description</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PDescription" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Indication <br> (Seperated By $$)</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PIndication" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Ingredient</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PIngredient" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Product Dosage</span>
+                                            </div>
+                                            <textarea type="text" class="form-control" name="PDosage" aria-label="Default"  rows="5" aria-describedby="inputGroup-sizing-default" required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <label class="input-group-text" for="exampleFormControlFile1">Product Image</label>
+                                            </div>
+                                            <input  name="PImage" type="file" class="form-control" id="exampleFormControlFile1" required>
+                                        </div>
+                                        <div class="form-group pt-1">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary btn-block" type="submit">Add New Product</button>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block float-right" type="submit">Delete Company</button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h5 class="mt-2">Orders</h5>
+                <div class="col-8 input-group">
+                    <div class="form-outline ">
+                        <input type="search" id="orderSearch" class="form-control " />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="max-height: 550px; overflow-y:scroll">
+                <table class="table table-striped" >
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Ingredient</th>
+                            <th>Indication</th>
+                            <th>Description</th>
+                            <th>Dosage</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(i=0;i< productList.length;i++){ %>
+                            <tr>
+                                <td><%= productList[i].product_name %></td>
+                                <td><img src="<%= productList[i].product_img %>" alt="<%= productList[i].product_name %>" class="img-thumbnail"></td>
+                                <td><%= productList[i].product_ingredient %></td>
+                                <td><%= productList[i].product_indication %></td>
+                                <td ><%= productList[i].product_description %></td>
+                                <td><%= productList[i].product_dosage %></td>
+                                <td>
+                                    <a role="button"  href = '/user/update-product/<%= productList[i].product_id %>'class="btn btn-primary btn-block">Edit</a>
+                                    <a role="button" class="btn btn-danger btn-block delete-product" data-toggle="modal" data-name="<%= productList[i].product_name %>"  data-id="<%= productList[i].product_id %>" data-target="#exampleModal">Delete</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>  
+    </div>
+    <!-- Button trigger modal -->
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p id="context">...</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="#" id="delete-link" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script>
+    $(".delete-product").on('click',function(){
+        let id = $(this).data('id')
+        let name = $(this).data('name');
+        $('#context').html(`Are you sure you want to delete ${name}.!!`);
+        let a = document.getElementById('delete-link');
+        href = `/user/delete-product/${id}`
+        a.setAttribute('href',href)
+    })
+</script>
