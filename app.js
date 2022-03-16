@@ -65,7 +65,7 @@ app.use((req, res,next) =>{
     
 // });
 
-app.listen(process.env.PORT || 3000,(err)=>{
+app.listen(process.env.URL || 3000,(err)=>{
     var log = err ? `${err}`:`Port Listining at Port ${3000}`;
     console.log(log);
 });
