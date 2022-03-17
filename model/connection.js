@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 const con = mysql.createConnection({
-    host:process.env.HOST || 'localhost',
-    user:process.env.USER || 'root',
-    password:process.env.PASSWORD || '',
-    port:3306,
-    database:process.env.DATABASE || 'test',
+    host:'my-test-database.cuvsibkjvg2u.us-east-1.rds.amazonaws.com',
+    user:'admin',
+    password:'0KnmAZlpMH4UT5AaEWTv',
+    port:'3306',
+    database:'ecommerce',
     multipleStatements: true
 });
 
