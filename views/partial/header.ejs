@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>Manibhadra Enterprise</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--
+
+TemplateMo 546 Sixteen Clothing
+
+https://templatemo.com/tm-546-sixteen-clothing
+
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="/css/owl.css">
+
+</head>
+
+<body>
+    <div class="container" style="position: sticky; top:12%; z-index: 99999;">
+        <div class="alert alert-success" id="success-alert" >
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Success! </strong> Product have added to your cart.
+        </div>
+    </div> 
+    
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <div id="upheader">
+        <header class="">
+
+            <!-- <div class="" style="float: left;color:#fff;">
+                <a class="" href="/">
+                    <h2>Manibhadra Enterprise</h2>
+                </a>
+                
+
+            </div> -->
+
+            
+            <nav class="navbar navbar-expand-lg">
+                <!-- <div class="titlename">
+                    <a class="navbar-brand" href="/">
+                        <h2>Manibhadra<em> Enterprise</em></h2>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div> -->
+
+                 <div class="titlename">
+                    <a class="navbar-brand" href="/">
+                        <h2>Manibhadra Enterprise </h2>
+                    </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+               
+
+
+
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">Brands</a>
+                                <div class="dropdown-menu" id="companyMenu" aria-labelledby="dropdownMenuLink">
+                                        <% for(i=0;i< companys.length; i++){ %>
+                                            <input type="hidden" name ="companyID" value="<%= companys[i].id %>">
+                                            <a class="dropdown-item" href="/brand/<%= companys[i].companyName %>"><%= companys[i].companyName %></a>
+                                        <% } %>
+                                </div>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="/about">About Us</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" title="Contact Us" href="/contact">Contact Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" title="Drop Shipping" href="/dropshipping">Drop Shipping</a>
+                            </li>
+                            <% if(userAuthenticated){ %>  
+                            <li class="nav-item">
+                                <a href="/logout" title="Logout"  class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                                      </svg>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/account" title="Account-info" class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                      </svg>
+                                    <!-- <i class='fas fa-user-alt' style='font-size:20px'></i> -->
+                                </a>
+                            </li>
+                            <% }else{ %>
+                            <!-- <li class="nav-item">
+                                <a href="/user/register" class="nav-link">SignUp</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a href="/user/login" class="nav-link">SignIn</a>
+                            </li>
+                            <% } %>
+                            <li class="nav-item cart">
+                                <a href="/addtocart/cart" title='Shopping cart' class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                      </svg>
+                                    <sup>0</sup></i>
+                                </a>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <div>
+                                    <input type="search" id="searchinput" class="form-control input col-8" placeholder="Product name or Ingredient">
+                                    <p id="datalist"></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+            </nav>
+        </header>
+    </div>
+      

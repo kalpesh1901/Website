@@ -1,0 +1,225 @@
+<%- include("./partial/header") %>
+    <!--Scroll Up Button -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class='fas fa-angle-double-up'></i></button>
+    <!-- -------------- -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <script>
+        function add_qty_plus(id){
+
+            $('.'+id).click(function(e){
+                e.preventDefault();
+                
+                fieldName = $(this).attr('data-field');
+                type      = $(this).attr('data-type');
+                var input = $("input[name='"+fieldName+"']");
+                var currentVal = parseInt(input.val());
+                if (!isNaN(currentVal)) {
+                    if(type == 'minus') {
+                        
+                        if(currentVal > input.attr('min')) {
+                            input.val(currentVal - 1).change();
+                        } 
+                        if(parseInt(input.val()) == input.attr('min')) {
+                        }
+            
+                    } else if(type == 'plus') {
+            
+                        if(currentVal < input.attr('max')) {
+                            input.val(currentVal + 1).change();
+                        }
+                        if(parseInt(input.val()) == input.attr('max')) {
+                            $(this).attr('disabled', true);
+                        }
+            
+                    }
+                    
+                } else {
+                    input.val(0);
+                }
+                var input = $("input[name='"+fieldName+"']");
+                var qty = parseInt(input.val());
+                var itemid = id;
+                $.ajax({
+                    method:"POST",
+                    url:"/addtocart/increment-decrement",
+                    data:{qty,itemid},
+                    success:function(data){
+                        $(".sub-total").text(data.totalPrice);
+                    }
+                })
+
+            });
+            $('.input-number').focusin(function(){
+               $(this).data('oldValue', $(this).val());
+            });
+            $('.input-number').change(function() {
+                
+                minValue =  parseInt($(this).attr('min'));
+                maxValue =  parseInt($(this).attr('max'));
+                valueCurrent = parseInt($(this).val());
+                
+                name = $(this).attr('name');
+                if(valueCurrent >= minValue) {
+                    $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+                } else {
+                    alert('Sorry, the minimum value was reached');
+                    $(this).val($(this).data('oldValue'));
+                }
+                if(valueCurrent <= maxValue) {
+                    $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+                } else {
+                    alert('Sorry, the maximum value was reached');
+                    $(this).val($(this).data('oldValue'));
+                }
+                
+                
+            });
+            $(".input-number").keydown(function (e) {
+                    // Allow: backspace, delete, tab, escape, enter and .
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                         // Allow: Ctrl+A
+                        (e.keyCode == 65 && e.ctrlKey === true) || 
+                         // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                             // let it happen, don't do anything
+                             return;
+                    }
+                    // Ensure that it is a number and stop the keypress
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                });
+        }
+    </script>
+
+    <div class="container">
+        <!--Section: Block Content-->
+        <section>
+            <div class="row toggle">
+                <div class="col-lg-8" style="margin-top:80px;">
+                    <div class="mb-3">
+                        <div class="pt-4 wish-list">
+                            <% if(cart.length != 0){ %>
+                            <h5 class="mb-4">Cart (<span  id="count"><%= cart.length %></span> items)</h5>
+                            <% for(i=0;i< cart.length;i++){ %>
+                            <div class="row mb-4" id="<%= cart[i].itemid %>" style="padding:5px;border-bottom: 1px solid lightgrey;">
+                                <div class="col-md-5 col-lg-3 col-xl-3">
+                                    <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                        <img class="img-responsive img-fluid w-100"
+                                        src="<%= cart[i].img %>" alt="Sample">
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-lg-9 col-xl-9">
+                                    <div>
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5><%= cart[i].name  %></h5>
+                                                <p class="mb-2 text-muted text-uppercase small">Weight: <%= cart[i].weight %></p>
+                                                <p class="mb-3 text-muted text-uppercase small">Size: <%= cart[i].size %></p>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-group mb-0">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"  class="btn btn-default <%= cart[i].itemid %>"  data-type="minus" data-field="<%= cart[i].itemid %>">
+                                                            <span class="fas fa-minus"></span>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" name="<%= cart[i].itemid %>" class="form-control input-number" value="<%= cart[i].qty %>" min="1" max="1000" style="width: 25px;">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"  class="btn btn-default <%= cart[i].itemid %>" data-type="plus" data-field="<%= cart[i].itemid %>">
+                                                            <span class="fas fa-plus"></span>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="#!" data-itemid="<%= cart[i].itemid %>"  type="button" class="card-link-secondary small text-uppercase mr-3 remove-item text-left"><i
+                                                class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                                            </div>
+                                            <p class="mb-0"><span><strong id="summary"><%= cart[i].price %></strong></span></p class="mb-0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <script> add_qty_plus('<%= cart[i].itemid %>')</script>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" style="margin-top:80px;">
+                    <div class="mb-3">
+                        <div class="pt-4">
+                            <ul class="list-group list-group-flush mt-4">
+                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                    Subtotal
+                                    <span class="cart-totalprice sub-total">USD $<%= totalPrice %></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    Shipping & Taxes 
+                                   <span class="cart-totalprice" style="font-size: small;">calculated at next step...</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                    <div>
+                                        <strong>Total</strong>
+                                        <strong>
+                                            <p class="mb-0">(including VAT)</p>
+                                        </strong>
+                                    </div>
+                                    <span>USD<strong id="cart-totalprice" class="sub-total"><%= totalPrice %></strong></span>
+                                </li>
+                            </ul>
+                            <a href="/addtocart/checkout"  >
+                                <button type="button" id="check" class="btn btn-primary btn-block">Checkout</button>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <% }else{ %>
+                    <div class="container ">
+                        <p>Look Like your cart is Empty!!</p>
+                        <span>Visit Home page and continue shopping...</span>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+    </div>
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
+
+    <!-- Additional Scripts -->
+    <script src="/js/custom.js"></script>
+    <script src="/js/owl.js"></script>
+    <script src="/js/datalist.js"></script>
+    <script src="/js/slick.js"></script>
+    <script src="/js/isotope.js"></script>
+    <script src="/js/accordions.js"></script>
+    <script src="/js/addtocart.js"></script>
+    <script src="/js/qty-input.js"></script>
+    <script src="/js/remove-cart.js"></script>
+   
+
+    <script language="text/Javascript">
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) {                   //declaring the array outside of the
+            if (!cleared[t.id]) {                      // function makes it static and global
+                cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                t.value = '';         // with more chance of typos
+                t.style.color = '#fff';
+            }
+        }
+    </script>
+
+
+    </body>
+
+    </html>

@@ -1,0 +1,92 @@
+<%- include("./partial/header") %>
+<div class="container register-section">
+    <% if(messages.danger) { %>
+        <div class="alert alert-danger" id="adjustment" style="position: sticky; top:12%; z-index: 99999;">
+            <%= messages.danger %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div> 
+    <% } %>
+    <form action="/user/register" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6 form-manager" id="shift-down">
+                <label class="mt-5" for="firstname">First name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="first name" value="<%= typeof firstname != 'undefined' ? firstname : '' %>">
+            </div>
+            <div class="form-group col-md-6 form-manager" id="adjustment">
+                <label class="mt-5" for="lastname">Last name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name" value="<%= typeof lastname != 'undefined' ? lastname : '' %>">
+            </div> 
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="abc@gmail.com" value="<%= typeof email != 'undefined' ? email : '' %>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="mobilenumber">Mobile Number</label>
+                <input type="tel" class="form-control" id="mobilenumber" name="mobilenumber" pattern="[0-9]{4}[0-9]{3}[0-9]{3}"
+                    placeholder="Mobile Number" value="<%= typeof mobilenumber != 'undefined' ? mobilenumber : '' %>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" value="<%= typeof confirmpassword != 'undefined' ? confirmpassword : '' %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address1">Address</label>
+            <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" value="<%= typeof address1 != 'undefined' ? address1 : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="address2">Address 2</label>
+            <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor" value="<%= typeof address2 != 'undefined' ? address2 : '' %>">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="country">Country</label>
+                <select id="country" name="country" class="form-control"> 
+                    <% for(i=0;i< country.length;i++){ %>
+                    <option value="<%= country[i].name %>"><%= country[i].name %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state" value="<%= typeof state != 'undefined' ? state : '' %>">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>">
+            </div>
+            <!-- <div class="form-group col-md-3">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>">
+            </div> -->
+            <div class="form-group col-md-2">
+                <label for="zipcode">Zip</label>
+                <input type="text" class="form-control" id="zipcode" name="zipcode" value="<%= typeof zipcode != 'undefined' ? zipcode : '' %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Check me out
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-md btn-block btn-success">Sign up</button>
+        <!--- id="button-center"---->
+    </form>
+</div>
+
+
+<%- include("./partial/footer") %>
+<!-- <script src="/js/country-state-city.js"></script> -->

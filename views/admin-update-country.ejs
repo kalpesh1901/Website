@@ -1,0 +1,65 @@
+<%- include("./partial/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 110px;">
+            <a role="button" href="/user/me-dashboard" class="float-left btn btn-primary"> Dashboard</a>
+            <a role="button" href="/user/add-product" class="stretched-link float-right btn btn-primary"> Add new Product</a>
+            <a role="button" href="/user/add-product-variant" class="stretched-link float-right btn btn-primary"> Add new Product variant</a>
+            <div class="pt-2">
+                <h1 class="text-center">
+                    Update the Country Details
+                </h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 mx-auto">
+                                <div class="mt-5">
+                                    <%= typeof msg != 'undefined' ? msg : ''  %>
+                                    <form action="/user/update-country/<%= result[0].id %>" method="POST">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Country Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" name='countryname' aria-label="Default" aria-describedby="inputGroup-sizing-default" value="<%= result[0].name %>">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Charges for First 250 gm</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="first250gm" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="<%= result[0].first_250_gm %>">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroup-sizing-default">Charges for Every 250 gm above the granted weight</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="above250gm" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="<%= result[0].above_250_gm %>">
+                                        </div>
+                                        <div class="form-group pt-1">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <button class="btn btn-primary btn-block float-right" type="submit">Delete Company</button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>

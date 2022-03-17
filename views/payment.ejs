@@ -1,0 +1,172 @@
+<%- include("./partial/header") %>
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=AewNiQe-UVZoFQq_F37lDe_liccqSM2opbDDvihYgmR8v-gem9ibgacaS90xrQHGJf1O_518xvhkAfuK"></script> -->
+    <div class="container">
+        <form action="/addtocart/payment" method="POST">
+            <div class="card mb-5">
+                <div class="card-header" style="margin-top: 110px;">
+                    Invoice
+                    <strong><%= new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(); %></strong>
+                    <span class="float-right"> <strong>Status:</strong> Pending</span>
+    
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <h6 class="mb-3">From:</h6>
+                            <div>
+                                <strong>Webz Poland</strong> 
+                            </div>
+                            <div>Madalinskiego 8</div>
+                            <div>71-101 Szczecin, Poland</div>
+                            <div>Email: info@webz.com.pl</div>
+                            <div>Phone: +48 444 666 3333</div>
+                        </div>
+    
+                        <div class="col-sm-6">
+                            <h6 class="mb-3">To:</h6>
+                            <div>
+                                <strong><%= username %></strong>
+                            </div>
+                            <div><strong>Email</strong>:<%= useremail %></div>
+                            <div><strong>Phone</strong>:<%= usermobilenumber %>.</div>
+                            <div><strong>Address:</strong><%= useraddress1 %>,</div>
+                            <div id="address2" name="address2"><%= useraddress2 %>,</div>
+                            <div><%= usercountry %>, <%= userstate %>, <%= usercity %>, <%= userzipcode %>,</div>
+                            <input type="hidden" id="address1" name="address1" value="<%= useraddress1 %>">
+                            <input type="hidden" id="address2" name="address2" value="<%= useraddress2 %>">
+                            <input type="hidden" id="email" name="email" value="<%= useremail %>">
+                            <input type="hidden" id="phone" name="phone" value="<%= usermobilenumber %>">
+                            <input type="hidden" id="country" name="country" value="<%= usercountry %>">
+                            <input type="hidden" id="state" name="state" value="<%= userstate %>">
+                            <input type="hidden" id="city" name="city" value="<%= usercity %>">
+                            <input type="hidden" id="zipcode" name="zipcode" value="<%= userzipcode %>">
+                        </div>
+    
+    
+    
+                    </div>
+    
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="center">#</th>
+                                    <th>Item</th>
+                                    <th>Size</th>
+                                    <th class="right">Unit Cost</th>
+                                    <th class="center">Qty</th>
+                                    <th class="right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(i=0;i< cart.length;i++){ %>
+                                <tr>
+                                    <td class="center"><%= i+1 %></td>
+                                    <td class="left strong"><%= cart[i].name %></td>
+                                    <td class="left"><%= cart[i].size %></td>
+                                    <td class="right"><%= cart[i].price %></td>
+                                    <td class="center"><%= cart[i].qty %></td>
+                                    <td class="right"><%= Math.round((cart[i].qty*cart[i].price)*100)/100 %></td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-lg-4 col-sm-5">
+                            <div class="float-left mt-4 pb-4">
+                                <button type="submit" class="btn submited btn-md btn-block btn-success">Place Order</button>
+                             </div>
+                        </div> -->
+    
+                        <div class="col-lg-4 col-sm-5 ml-auto">
+                            <table class="table table-clear">
+                                <tbody>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Subtotal</strong>
+                                        </td>
+                                        <td class="right"><%= Math.round(Subtotal_of_Product*100)/100 %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Shipping Charges</strong>
+                                        </td>
+                                        <td class="right"><%= Math.round(Shipping_Charges*100)/100 %></td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="left">
+                                            <strong>Discount (20%)</strong>
+                                        </td>
+                                        <td class="right">$1,699,40</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>VAT (10%)</strong>
+                                        </td>
+                                        <td class="right">$679,76</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Total</strong>
+                                        </td>
+                                        <td class="right">
+                                           <p>USD</p> <strong><%= Math.round(Total_price*100)/100 %></strong>
+                                            <p id="totalprice"><%= weight %>Gram</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="right">
+                                            <div class="float-left mt-4 pb-4 ">
+                                                <button type="submit" class="btn submited btn-md btn-block btn-success">Continue to payment</button>
+                                                <!-- <div id="paypal-button-container"></div> -->
+                                             </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>        
+    </div>
+    <!-- -------------- -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+
+<!-- <script>
+    
+    paypal.Buttons({
+       
+      createOrder: function(data, actions) {
+        let tp = document.getElementById('totalprice').innerHTML;
+        console.log(tp);
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              currency_code: 'USD',
+              value: `${tp}`
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Transaction completed by ' + details.payer.name.given_name + ', and' + details.payer.name.given_name + ' your Order has been placed!!. Thank you for Shopping with us..');
+          //window.location.assign('http://localhost:3000/user/register/')
+          fetch('http://localhost:3000/addtocart/payment',{method:'POST',body:'hhh'}).then(response=>{
+              window.location.replace('http://localhost:3000')
+          });
+
+        });
+      }
+    }).render('#paypal-button-container'); // Display payment options on your web page
+
+  </script> -->

@@ -1,0 +1,210 @@
+<%- include("./partial/header") %>
+
+    <div class="container">
+        <form action="/addtocart/payment" method="POST">
+            <div class="card mb-5">
+                <% var event = new Date(fullDetails.details[0].purchaseTime) %>
+                <% let date = JSON.stringify(event) %>
+                <% date = date.slice(1,11) %>
+                <div class="card-header" style="margin-top: 110px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Invoice: </strong><%= date %>
+                            <div>
+                                <strong>Order ID:</strong><%= fullDetails.order_details[0].order_id %>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span  class="float-right">
+                                <strong >Status:</strong>  
+                                <div id="headerStatus">
+                                    <%= fullDetails.details[0].status %>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <h6 class="mb-3">From:</h6>
+                            <div>
+                                <strong>Webz Poland</strong>
+                            </div>
+                            <div>Madalinskiego 8</div>
+                            <div>71-101 Szczecin, Poland</div>
+                            <div>Email: info@webz.com.pl</div>
+                            <div>Phone: +48 444 666 3333</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-3">To:</h6>
+                            <% let address = fullDetails.details[0].shipping_address.split(';') %>
+                            <div><strong><%= fullDetails.details[0].user_name %></strong></div>
+                            <div>Email:<%= fullDetails.details[0].user_email %></div>
+                            <div>Phone:<%= fullDetails.details[0].user_mobile %></div>
+                            <div><%= address[0] %></div>
+                            <div id="address2" name="address2"><%= address[1] %></div>
+                            <div><%= fullDetails.details[0].country %>, <%= fullDetails.details[0].state %>, <%= fullDetails.details[0].city %>, <%= fullDetails.details[0].zipcode %></div>
+                        </div>
+    
+    
+    
+                    </div>
+    
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="center">#</th>
+                                    <th>Item</th>
+                                    <th>Size</th>
+                                    <th class="right">Unit Cost</th>
+                                    <th class="center">Qty</th>
+                                    <th class="right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(i=0;i< fullDetails.order_details.length;i++){ %>
+                                <tr>
+                                    <td class="center"><%= 1+i %></td>
+                                    <td class="left strong"><%= fullDetails.order_details[i].item_name %></td>
+                                    <td class="left"><%= fullDetails.order_details[i].item_size %></td>
+                                    <td class="right"><%= fullDetails.order_details[0].item_cost %></td>
+                                    <td class="center"><%= fullDetails.order_details[i].item_qty %></td>
+                                    <td class="right"><%= fullDetails.order_details[i].item_qty*fullDetails.order_details[i].item_cost %></td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-5 ml-auto">
+                            <table class="table table-clear">
+                                <tbody>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Subtotal</strong>
+                                        </td>
+                                        <td class="right"><%= fullDetails.details[0].order_amount %></td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="left">
+                                            <strong>Discount (20%)</strong>
+                                        </td>
+                                        <td class="right">$1,699,40</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left">
+                                            <strong>VAT (10%)</strong>
+                                        </td>
+                                        <td class="right">$679,76</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td class="left">
+                                            <strong>Total</strong>
+                                        </td>
+                                        <td class="right">
+                                            <strong><%= fullDetails.details[0].order_amount %></strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+        </form>  
+    </div>
+    <div class="container dis">
+        <input type="hidden" id='orderID' name="orderID" value="<%= fullDetails.order_details[0].order_id %>">
+        <div class="row">
+            <div class="col-md-2 col-sm-3">
+                <div class="float-center mt-4 pb-4">
+                    <a class="btn btn-md btn-block btn-secondary" href="/user/me-dashboard" role="button">Back to Panel</a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="float-center mt-4 pb-4">
+                    <button type="submit" id="preparingOrder" class="btn submited btn-md btn-block btn-warning">Preparing Order</button>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="float-center mt-4 pb-4">
+                    <button type="submit" id="dispatchedOrder" class="btn submited btn-md btn-block btn-primary">Dispatched</button>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="float-center mt-4 pb-4">
+                    <button type="submit" id="deliveredOrder" class="btn submited btn-md btn-block btn-success">Delivered</button>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-3">
+                <div class="float-center mt-4 pb-4">
+                    <button type="submit" onclick="window.print()" class="btn submited btn-md btn-block btn-secondary">Print Bill</button>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <style>
+        @media print{
+            header,footer, .dis{
+                display: none;
+            }
+        }
+    </style>
+    <!-- -------------- -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/datalist.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/addtocart.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#preparingOrder').on('click',function(){
+            let orderID = $('#orderID').val();
+            let status = 'Preparing';
+            $('#headerStatus').text(status);
+            $.ajax({
+                method:'Post',
+                data:{orderID,status},
+                url:'/user/update-status',
+                success:function(data){
+                    console.log(data);
+                }
+            })
+        })
+        $('#dispatchedOrder').on('click',function(){
+            let orderID = $('#orderID').val();
+            let status = 'Dispatched';
+            $('#headerStatus').text(status);
+            $.ajax({
+                method:'Post',
+                data:{orderID,status},
+                url:'/user/update-status',
+                success:function(data){
+                    console.log(data);
+                }
+            })
+        })
+        $('#deliveredOrder').on('click',function(){
+            let orderID = $('#orderID').val();
+            let status = 'Delivered';
+            $('#headerStatus').text(status);
+            $.ajax({
+                method:'Post',
+                data:{orderID,status},
+                url:'/user/update-status',
+                success:function(data){
+                    console.log(data);
+                }
+            })
+        })
+    })
+</script>
